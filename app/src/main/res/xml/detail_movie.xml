@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:duration="400"
+        app:motionInterpolator="easeInOut">
+
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:moveWhenScrollAtTop="true"
+            app:touchAnchorId="@id/details_rv"
+            app:touchAnchorSide="top" />
+
+        <KeyFrameSet>
+            <KeyPosition
+                app:framePosition="20"
+                app:keyPositionType="deltaRelative"
+                app:motionTarget="@id/details_poster"
+                app:percentY="0.51" />
+
+            <KeyAttribute
+                android:elevation="@dimen/dp_4"
+                android:rotation="45"
+                android:rotationY="15"
+                app:framePosition="20"
+                app:motionTarget="@id/details_poster" />
+
+            <KeyAttribute
+                android:elevation="0dp"
+                app:framePosition="25"
+                app:motionTarget="@id/details_poster" />
+
+            <KeyAttribute
+                android:elevation="0dp"
+                app:framePosition="75"
+                app:motionTarget="@id/details_appbar_background" />
+
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="75"
+                app:motionTarget="@id/details_subtitle" />
+
+            <KeyAttribute
+                app:framePosition="60"
+                app:motionTarget="@id/details_status_bar_anchor">
+                <CustomAttribute
+                    app:attributeName="backgroundColor"
+                    app:customColorValue="@color/color_white" />
+            </KeyAttribute>
+
+            <KeyTrigger
+                app:framePosition="60"
+                app:motionTarget="@id/details_follow_fab"
+                app:onNegativeCross="show" />
+
+            <KeyTrigger
+                app:framePosition="70"
+                app:motionTarget="@id/details_follow_fab"
+                app:onPositiveCross="hide" />
+
+        </KeyFrameSet>
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint android:id="@id/details_backdrop_scrim">
+            <CustomAttribute
+                app:attributeName="background"
+                app:customColorDrawableValue="@android:color/transparent" />
+        </Constraint>
+
+        <Constraint android:id="@id/details_toolbar">
+            <Transform android:elevation="0dp" />
+            <CustomAttribute app:customColorValue="?android:attr/textColorPrimaryInverse" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/details_appbar_background"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            app:layout_constraintBottom_toBottomOf="@id/details_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <CustomAttribute
+                app:attributeName="cutProgress"
+                app:customFloatValue="1.0" />
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/details_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toTopOf="@id/details_subtitle"
+            app:layout_constraintEnd_toStartOf="@id/details_follow_fab"
+            app:layout_constraintStart_toEndOf="@id/details_poster"
+            app:layout_constraintTop_toBottomOf="@id/details_appbar_background" />
+
+        <Constraint
+            android:id="@id/details_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/dp_4"
+            app:layout_constraintBottom_toTopOf="@id/details_appbar_background"
+            app:layout_constraintEnd_toEndOf="@+id/details_title"
+            app:layout_constraintStart_toEndOf="@id/details_poster"
+            app:layout_constraintTop_toBottomOf="@id/details_title" />
+
+        <Constraint
+            android:id="@id/details_poster"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="200dp"
+            android:elevation="@dimen/dp_4"
+            app:layout_constraintDimensionRatio="h,1:1.5"
+            app:layout_constraintStart_toStartOf="@id/details_rv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint android:id="@id/details_status_bar_anchor">
+
+            <Transform android:elevation="0dp" />
+
+            <CustomAttribute
+                app:attributeName="backgroundColor"
+                app:customColorValue="@color/color_white" />
+        </Constraint>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@id/details_backdrop_scrim">
+            <CustomAttribute
+                app:attributeName="background"
+                app:customColorDrawableValue="@color/color_white" />
+        </Constraint>
+
+        <Constraint android:id="@id/details_toolbar">
+            <Transform android:elevation="@dimen/dp_4" />
+            <CustomAttribute app:customColorValue="?android:attr/textColorPrimary" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/details_appbar_background"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:elevation="@dimen/dp_4"
+            app:layout_constraintEnd_toEndOf="@id/details_rv"
+            app:layout_constraintStart_toStartOf="@id/details_rv"
+            app:layout_constraintTop_toBottomOf="@id/details_status_bar_anchor">
+
+            <CustomAttribute
+                app:attributeName="cutProgress"
+                app:customFloatValue="0.0" />
+
+        </Constraint>
+
+        <Constraint
+            android:id="@id/details_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="48dp"
+            android:elevation="@dimen/dp_4"
+            app:layout_constraintBottom_toBottomOf="@id/details_appbar_background"
+            app:layout_constraintEnd_toEndOf="@id/details_appbar_background"
+            app:layout_constraintStart_toStartOf="@id/details_appbar_background"
+            app:layout_constraintTop_toTopOf="@id/details_appbar_background" />
+
+        <Constraint
+            android:id="@id/details_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:elevation="@dimen/dp_4"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/details_title"
+            app:layout_constraintStart_toStartOf="@id/details_title"
+            app:layout_constraintTop_toBottomOf="@id/details_title" />
+
+        <Constraint
+            android:id="@id/details_poster"
+            android:layout_width="72dp"
+            android:layout_height="0dp"
+            android:elevation="0dp"
+            app:layout_constraintDimensionRatio="h,1:1.5"
+            app:layout_constraintStart_toStartOf="@id/details_title"
+            app:layout_constraintTop_toBottomOf="@id/details_status_bar_anchor" />
+
+        <Constraint android:id="@id/details_status_bar_anchor">
+
+            <Transform android:elevation="@dimen/dp_4" />
+
+            <CustomAttribute
+                app:attributeName="backgroundColor"
+                app:customColorValue="?android:attr/colorBackground" />
+        </Constraint>
+
+    </ConstraintSet>
+
+
+</MotionScene>

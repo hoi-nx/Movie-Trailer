@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.sun.moviedb.data.entity.Movie" />
+
+        <variable
+            name="viewModel"
+            type="com.sun.moviedb.view.detail.DetailMovieViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/details_motion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/detail_movie">
+
+<!--        <fragment-->
+<!--            android:id="@+id/details_backdrop_scrim"-->
+<!--            android:name="com.sun.moviedb.view.detail.YoutubeFragment"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/details_backdrop"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/details_backdrop"-->
+<!--            app:layout_constraintStart_toStartOf="@id/details_backdrop"-->
+<!--            app:layout_constraintTop_toTopOf="@id/details_backdrop" />-->
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/details_backdrop_scrim"
+            android:name="com.sun.moviedb.view.detail.YoutubeFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/details_title"
+            app:layout_constraintEnd_toEndOf="@+id/details_toolbar"
+            app:layout_constraintStart_toStartOf="@+id/details_status_bar_anchor"
+            app:layout_constraintTop_toTopOf="@+id/details_toolbar"
+            app:resize_mode="zoom" />
+<!--        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView-->
+<!--            android:id="@+id/details_backdrop_scrim"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/details_appbar_background"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/details_backdrop"-->
+<!--            app:layout_constraintStart_toStartOf="@id/details_backdrop"-->
+<!--            app:layout_constraintTop_toTopOf="@id/details_backdrop"-->
+<!--            app:showFullScreenButton="true" />-->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/details_poster"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            android:transformPivotX="0px"
+            android:transformPivotY="0px"
+            android:transitionName="poster">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                android:url="@{item.posterPath}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:id="@+id/details_gap_filler"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="?android:attr/colorBackground"
+            app:layout_constraintBottom_toTopOf="@id/details_rv" />
+
+        <com.sun.moviedb.view.widget.TopLeftCutBackgroundView
+            android:id="@+id/details_appbar_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:backgroundColor="?android:attr/colorBackground"
+            app:topLeftCutSize="@dimen/dp_48" />
+
+
+        <TextView
+            android:id="@+id/details_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="0.85"
+            android:text="@{item.title}"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintBottom_toTopOf="@id/details_subtitle"
+            app:layout_constraintEnd_toStartOf="@id/details_follow_fab"
+            app:layout_constraintStart_toEndOf="@id/details_poster"
+            app:layout_constraintTop_toBottomOf="@id/details_appbar_background" />
+
+        <androidx.emoji.widget.EmojiAppCompatTextView
+            android:id="@+id/details_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/color_text_primary"
+            app:layout_constraintBottom_toTopOf="@id/details_appbar_background"
+            app:layout_constraintEnd_toEndOf="@+id/details_title"
+            app:layout_constraintStart_toEndOf="@id/details_poster"
+            app:layout_constraintTop_toBottomOf="@id/details_title"
+            app:titleGenres="@{viewModel.detailMovie.genres}" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintTop_toBottomOf="@id/details_status_bar_anchor"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/colorBackground"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_appbar_background">
+
+            <ImageView
+                android:id="@+id/details_badge_icon"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_details_rating"
+                app:layout_constraintEnd_toStartOf="@+id/details_age_icon"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_badge_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="@{item.voteAverage.toString()}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:layout_constraintEnd_toEndOf="@+id/details_badge_icon"
+                app:layout_constraintStart_toStartOf="@+id/details_badge_icon"
+                app:layout_constraintTop_toBottomOf="@+id/details_badge_icon" />
+
+            <ImageView
+                android:id="@+id/details_age_icon"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_details_age"
+                app:layout_constraintEnd_toStartOf="@+id/details_time_icon"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/details_badge_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_age_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="@{item.voteCount.toString()}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:layout_constraintEnd_toEndOf="@+id/details_age_icon"
+                app:layout_constraintStart_toStartOf="@+id/details_age_icon"
+                app:layout_constraintTop_toBottomOf="@+id/details_age_icon" />
+
+            <ImageView
+                android:id="@+id/details_time_icon"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_details_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/details_age_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_time_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="@{viewModel.detailMovie.runTime.toString()}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:layout_constraintEnd_toEndOf="@+id/details_time_icon"
+                app:layout_constraintStart_toStartOf="@+id/details_time_icon"
+                app:layout_constraintTop_toBottomOf="@+id/details_time_icon" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_8"
+                android:text="@{item.overview}"
+                android:textColor="@color/color_text_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/details_age_label" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/details_status_bar_anchor"
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:background="@drawable/status_bar_translucent_scrim"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/details_follow_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:onClick="@{() -> viewModel.toggleFavorite(item.id)}"
+            android:scaleType="centerInside"
+            android:src="@{viewModel.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_outline}"
+            app:layout_constraintBottom_toTopOf="@id/details_appbar_background"
+            app:layout_constraintEnd_toEndOf="@id/details_appbar_background"
+            app:layout_constraintTop_toTopOf="@id/details_appbar_background" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

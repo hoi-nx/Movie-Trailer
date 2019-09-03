@@ -1,0 +1,22 @@
+<resources>
+    <string name="error_connect">Network not available</string>
+    <string name="title_search">Search</string>
+    <string name="title_filter">Filter</string>
+    <string name="title_now_playing">Now playing</string>
+    <string name="title_popular">Popular</string>
+    <string name="title_up_coming">Up coming</string>
+    <string name="title_top_rate">Top rate</string>
+    <string name="title_more">More</string>
+    <string name="title_dark_theme">Dark Theme</string>
+    <string name="title_genres">Genres</string>
+    <string name="title_trailer">Trailer</string>
+    <string name="title_casting">Cast</string>
+    <string name="title_producer">Producer</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="app_info_copy_right">© 2019, Sun-Asterisk. All Rights Reserved.</string>
+    <string name="link_website">http://nguyenxuanhoi.com</string>
+    <string name="email">nguyen.xuan.hoi@sun-asterisk.com</string>
+    <string name="title_about_me">About me</string>
+    <string name="title_infomation_actor">Infomation</string>
+    <string name="title_more_movie">More Movies</string>
+</resources>

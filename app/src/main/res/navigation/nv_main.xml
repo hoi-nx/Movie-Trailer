@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nv_main"
+    app:startDestination="@id/splashScreenFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.sun.moviedb.view.SplashScreenFragment"
+        android:label="SplashScreenFragment"
+        tools:layout="@layout/fragment_splash_screen">
+
+        <action
+            android:id="@+id/actionSplashToHome"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.sun.moviedb.view.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/actHomeToDetail"
+            app:destination="@id/detailMovieFragment"
+            app:popUpTo="@id/detailMovieFragment"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"/>
+        <action
+            android:id="@+id/actHomeToMovieByCategory"
+            app:destination="@id/movieByCategoryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"/>
+        <action
+            android:id="@+id/actHomeToSearch"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"/>
+        <action
+            android:id="@+id/actHomeToMovieByGenres"
+            app:destination="@id/movieByGenresFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"/>
+        <action
+            android:id="@+id/actHomeToFavorite"
+            app:destination="@id/favoriteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailMovieFragment"
+        android:name="com.sun.moviedb.view.detail.DetailMovieFragment"
+        android:label="DetailMovieFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument android:name="movie"
+            app:argType="com.sun.moviedb.data.entity.Movie"/>
+        <action
+            android:id="@+id/actDetailToActorInfo"
+            app:destination="@id/actorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieByCategoryFragment"
+        android:name="com.sun.moviedb.view.category.MovieByCategoryFragment"
+        android:label="MovieByCategoryFragment"
+        tools:layout="@layout/fragment_movie_by_category">
+        <argument
+            android:name="query"
+            app:argType="string"/>
+        <action
+            android:id="@+id/actMovieByCategoryToDetail"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieByGenresFragment"
+        android:name="com.sun.moviedb.view.genres.MovieByGenresFragment"
+        android:label="MovieByGenresFragment"
+        tools:layout="@layout/fragment_movie_by_genres">
+        <argument
+            android:name="genres"
+            app:argType="com.sun.moviedb.data.entity.Genres"/>
+        <action
+            android:id="@+id/actMovieByGenresToDetail"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.sun.moviedb.view.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/actSearchToDetail"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.sun.moviedb.view.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/actionFavoriteToDetail"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/actorFragment"
+        android:name="com.sun.moviedb.view.actor.ActorFragment"
+        android:label="ActorFragment"
+        tools:layout="@layout/fragment_actor_info">
+        <argument
+            android:name="caster"
+            app:argType="com.sun.moviedb.data.dto.CastDTO"/>
+    </fragment>
+</navigation>

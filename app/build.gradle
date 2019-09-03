@@ -1,0 +1,154 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: "androidx.navigation.safeargs"
+
+apply plugin: 'io.fabric'
+
+
+android {
+    // Load version properties
+    def versionPropertiesFile = file('config.properties')
+    Properties versionProperties = new Properties()
+    versionProperties.load(new FileInputStream(versionPropertiesFile))
+    def appVersionCode = versionProperties['appVersionCode'].toInteger()
+    def appVersionName = versionProperties['appVersionName'].toString()
+    def CLIENT_ID = versionProperties['CLIENT_ID'].toString()
+    compileSdkVersion versions.compileSdk
+    defaultConfig {
+        applicationId "com.sun.moviedb"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode appVersionCode
+        versionName appVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "CLIENT_ID", CLIENT_ID
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "int", "APP_DATABASE_VERSION", "1"
+        buildConfigField "long", "BUILD_TIME", System.currentTimeMillis() +"L"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+            }
+        }
+
+    }
+    flavorDimensions 'default'
+    productFlavors {
+        pro {
+            applicationId 'com.sun.moviedb'
+            resValue 'string', 'app_name', 'Movie'
+        }
+        dev {
+            applicationId 'com.sun.moviedb.dev'
+            resValue 'string', 'app_name', 'Movie-DEV'
+
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def appName = output.outputFileName
+            if (appName.contains("dev")) {
+                appName = "Movie-DEV.apk"
+            }else {
+                appName = "Movie.apk"
+            }
+            outputFileName = appName
+        }
+    }
+    variantFilter {
+        if (it.buildType.name != productType || it.flavors[0].name != productFlavor) {
+            it.ignore = true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin_version"
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation "androidx.core:core-ktx:$versions.androidx"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
+    implementation "androidx.cardview:cardview:$versions.card_view"
+    implementation "com.google.code.gson:gson:$versions.gson_version"
+    implementation "com.google.android.material:material:$versions.google_material"
+    implementation "com.github.bumptech.glide:glide:$versions.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
+    implementation "de.hdodenhof:circleimageview:$versions.circle_imageview"
+    implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"
+
+    // Architecture
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.nav_version"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle_version"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit_version"
+
+    // Koin for Android
+    implementation "org.koin:koin-android:$versions.koin_version"
+    implementation "org.koin:koin-android-viewmodel:$versions.koin_version"
+
+    //Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.logging_interceptor"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutine"
+
+    //ROOM
+    implementation "androidx.room:room-runtime:$versions.room_version"
+    kapt "androidx.room:room-compiler:$versions.room_version"
+    implementation "androidx.room:room-ktx:$versions.room_version"
+
+    //Pagging
+    implementation "androidx.paging:paging-runtime:$versions.paging_version"
+
+    //preference
+    implementation "androidx.preference:preference:$versions.preference"
+
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit_version"
+
+    //rxjava-rxandroid
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxjava_version"
+    //implementation "io.reactivex.rxjava2:rxjava:$rxandroid_version"
+
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation "androidx.emoji:emoji-appcompat:1.0.0"
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v1.9.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
+    //implementation 'com.google.firebase:firebase-analytics:17.1.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+
+    //Testing
+    testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:runner:$versions.runner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso_core"
+}
+//apply plugin: 'com.google.gms.google-services'

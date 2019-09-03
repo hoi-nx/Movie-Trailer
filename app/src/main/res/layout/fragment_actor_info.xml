@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sun.moviedb.view.actor.ActorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_layout_poster_and_movie_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/motion_info_actor">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dp_8"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/title_infomation_actor" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_movie_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/dp_8"
+            app:layout_constraintDimensionRatio="2:3">
+
+            <ImageView
+                android:id="@+id/image_poster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                android:url="@{viewModel.actor.profile_path}"
+                android:contentDescription="@null" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_movie_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardElevation="@dimen/dp_4"
+            app:layout_constraintDimensionRatio="2:3">
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/motion_layout_movie_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutDescription="@xml/motion_movie_info">
+
+                <LinearLayout
+                    android:id="@+id/view_group_movie_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_movie_name"
+                        style="?attr/textAppearanceHeadline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.actor.name}" />
+
+                    <RatingBar
+                        android:id="@+id/text_rating"
+                        style="?attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:progressBackgroundTint="@color/color_yellow"
+                        android:progressTint="@color/color_yellow"
+                        android:rating="@{viewModel.actor.popularity}"
+                        android:secondaryProgressTint="@color/color_yellow" />
+
+                    <TextView
+                        android:id="@+id/text_category"
+                        style="?attr/textAppearanceSubtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.actor.birthday}" />
+                </LinearLayout>
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_vertical_50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".5" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_horizontal_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent=".40" />
+
+                <TextView
+                    android:id="@+id/text_movie_synopsis"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:lineSpacingExtra="@dimen/dp_8"
+                    android:padding="@dimen/dp_16"
+                    android:text="@{viewModel.actor.biography}" />
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_more_movies"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardElevation="@dimen/dp_16">
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/motion_layout_more_movies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutDescription="@xml/motion_more_movies">
+
+                <ImageView
+                    android:id="@+id/image_arrow"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_margin="@dimen/dp_8"
+                    android:padding="@dimen/dp_2"
+                    android:src="@drawable/ic_up"
+                    android:tint="@color/color_gray" />
+
+                <TextView
+                    android:id="@+id/text_more_movies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/title_more_movie"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_more_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dp_8"
+                    android:paddingEnd="@dimen/dp_8"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:movieCategories="@{viewModel.movieByActor}" />
+
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_52"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".52" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".48" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".60" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_93"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".93" />
+
+
+        <View
+            android:id="@+id/view_grey_out"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="@color/color_text_primary"
+            android:elevation="@dimen/dp_16" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>
