@@ -1,4 +1,8 @@
 # Movie-Trailer
+## App
+![](images/app_intro.mp4)
+![](images/intro.gif)
+## Technology
 ![alt text](https://developer.android.com/topic/libraries/architecture/images/final-architecture.png)
 
 API <https://www.themoviedb.org/documentation/api>
@@ -36,8 +40,7 @@ Navigation: <https://developer.android.com/guide/navigation>
 
 Architecture: <https://github.com/googlesamples/android-architecture-components>
 
-<===
-### API keys
+## API keys
 
 You need to supply API / client keys for the various services the
 app uses. That is currently [TMDb](https://www.themoviedb.org/documentation/api) and [Google-service.json](https://firebase.google.com) (for Crashlytics). You can find information about
